@@ -17,3 +17,35 @@
 
 #memcached：断电数据丢失
 #redis:支持持久化，单独开一个进程完成持久化，要保持性能就需要关闭持久化
+
+#安装 https://github.com/MicrosoftArchive/redis/releases
+
+#命令行操作：
+redis-cli 
+redis-cli -h host -p port -a password
+
+#基本操作
+#默认有16个数据库，编号从0-15
+select 1 #切换数据
+
+#查看所有的key
+keys *
+
+#查看所有n开头的key
+keys n*
+
+#清空redis
+flushdb 
+
+#添加key=value
+set key value
+
+#随机取一个key
+randomkey
+
+#查看key的类型
+type key
+
+
+
+

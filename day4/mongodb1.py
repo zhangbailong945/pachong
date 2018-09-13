@@ -53,5 +53,33 @@ mongod --config "D:/MongoDB/mongod.cfg" --bind_i 0.0.0.0 --install
 mongod --bind_ip 0.0.0.0 --port 27017 --logpath d:/mongodb/log/mongod.log --logappend --dbpath d:/mongodb/data/db --serviceName "MongoDb" --serviceDiplayName "MongoDB" --install
 
 
+#5.启动/关闭
+net start MongoDB
+net stop MongoDB
 
+#6.登录
+mongo
 
+#7.创建账号
+
+use admin
+db.createUser(
+  {
+    user: "root",
+    pwd: "123",
+    roles: [ { role: "root", db: "admin" } ]
+  }
+)
+
+#8.重启数据库
+mongod --remove
+mongod --config "mongod.cfg" --bind_ip 0.0.0.0 --install --auth
+
+#9.登录
+mongo --port 27017 -u "myUser" -p "abc123" --authenticationDatabase "admin"
+
+db.auth("账号","密码")
+
+mongo
+use admin
+db.auth("root","root")
