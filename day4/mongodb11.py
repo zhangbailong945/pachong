@@ -37,3 +37,4 @@ for n,item in enumerate(l):
         'salary':item[5]
     }
     table.save(d)
+
