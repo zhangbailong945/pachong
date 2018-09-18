@@ -1,0 +1,199 @@
+#1.查询岗位名以及各岗位内的员工姓名
+
+db.emp.aggregate(
+    {
+        "$group":{
+            "_id":"$post",
+            "emps":{
+                "$push":"$name"
+            }
+        }
+    }
+)
+
+#2.查询岗位名以及岗位内包含的员工个数
+db.emp.aggregate(
+    {
+        "$group":{
+            "_id":"$post",
+            "count":{
+                "$sum":1
+            }
+        }
+    }
+)
+
+#3.查询公司男员工和女员工的个数
+db.emp.aggregate(
+    {
+        "$group":{
+            "_id":"$sex",
+            "count":{
+                "$sum":1
+            }
+        }
+    }
+)
+
+#4.查询岗位名以及各岗位的平均薪资，最高薪资，最低薪资
+db.emp.aggregate(
+    {
+        "$group":{
+            "_id":"$post",
+            "avg_salary":{
+                "$avg":"$salary"
+            },
+            "max_salary":{
+                "$max":"$salary"
+            },
+            "min_salary":{
+                "$min":"$salary"
+            }
+        }
+    }
+)
+
+#5.查询男员工的平均薪资，女员工的平均薪资
+db.emp.aggregate(
+    {
+        "$group":{
+            "_id":"$sex",
+            "avg_salary":{
+                "$avg":"$salary"
+            }
+        }
+    }
+)
+
+#6.查询各岗位内包含的员工个数小于2的、岗内包含员工名字、个数
+db.emp.aggregate(
+    {
+        "$group":{
+            "_id":"$post",
+            "countNum":{
+                "$sum":1
+            },
+            "names":{
+                "$push":"$name"
+            }
+        }
+    },
+    {
+        "$match":{
+            "countNum":{
+                "$lt":2
+            }
+        }
+    },
+    {
+        "$project":{
+            "_id":0,
+            "names":1,
+            "countNum":1,
+        }
+    }
+)
+
+#7.查询岗位平均年薪大于5000的岗位名，平均工资
+db.emp.aggregate(
+    {
+        "$group":{
+            "_id":"$post",
+            "avg_salary":{
+                "$avg":"$salary"
+            }
+        }
+    },
+    {
+        "$match":{
+            "avg_salary":{
+                "$gt":3000
+            }
+        }
+    },
+    {
+        "$project":{
+            "_id":1,
+            "post":1,
+            "avg_salary":1
+        }
+    }
+)
+
+#8.查询各岗位平均薪资大于2000小于5000的岗位名，平均工资
+db.emp.aggregate(
+    {
+        "$group":{"_id":"$post","avg_salary":{"$avg":"$salary"}}
+    },
+    {
+        "$match":{"avg_salary":{"$gt":3000,"$lt":5000}}
+    },
+    {
+        "$project":{"_id":1,"avg_salary":1}
+    }
+)
+
+#9.查询所有员工信息，先按照年龄升序排列，如果age相同则按照date降序排序
+db.emp.aggregate(
+    {"$sort":{"age":1,"date":-1}}
+)
+
+#10.查询各岗位平均工资大于3000的岗位名，平均工资结果按平均薪资圣墟排列
+db.emp.aggregate(
+    {
+        "$group":{
+            "_id":"$post",
+            "avg_salary":{
+                "$avg":"$salary"
+            }
+        }
+    },
+    {
+        "$match":{
+            "avg_salary":{
+                "$gt":3000
+            }
+        }
+    },
+    {
+        "$sort":{
+            "avg_salary":1
+        }
+    }
+)
+
+#11.查询各岗位平均薪资大于4000的岗位名，平均工资，结果按平均薪资降序排列，取前一个
+db.emp.aggregate(
+    {
+        "$group":{
+            "_id":"$post",
+            "avg_salary":{
+                "$avg":"$salary"
+            }
+        }
+    },
+    {
+        "$match":{
+            "avg_salary":{
+                "$gt":4000
+            }
+        }
+    },
+    {
+        "$sort":{
+            "avg_salary":-1
+        }
+    },
+    {
+        "$limit":1
+    },
+    {
+        "$project":{
+            "date":new Date,
+            "name":1,
+            "post":1,
+            "avg_salary":"$avg_salary",
+            "_id":1,
+        }
+    }
+)
