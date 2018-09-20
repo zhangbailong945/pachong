@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 '''
 上述无论哪种解决方案其实没有解决一个性能相关的问题：IO阻塞，无论是多进程还是多线程，
 在遇到IO阻塞时都会被操作系统强行剥夺走CPU的执行权限，程序的执行效率因此就降低了下来。
@@ -9,7 +9,7 @@
 '''
 
 import asyncio
-=======
+
 #在python3.3之后新增了asyncio模块，可以帮我们检测IO（只能是网络IO），实现应用程序级别的切换
 
 import asyncio
@@ -30,4 +30,4 @@ tasks=[
 loop=asyncio.get_event_loop()
 loop.run_until_complete(asyncio.wait(tasks))
 loop.close()
->>>>>>> 676928e28053b4fa6d4176dc253eb8ec435aab63
+
