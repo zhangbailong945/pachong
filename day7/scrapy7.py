@@ -49,6 +49,17 @@ response.css('div[@id="s_fm"]').extract()
 response.xpath('//a[contains(@href,"www")]/@href').extract()
 response.css('a[href*="www"]::attr(href)').extract()
 
+#9.1 正则表达式
+response.xpath("//a/text()").re(r'Name:(.*)')
+response.xpath('///text()').re_first(r'Name:(.*)')
+
+#10.1 xpath相对路径
+res=response.xpath('//a[contains(@href,"3")]')[0]
+
+#11.1 带变量的xpath
+response.xpath('//div[@id=$name]/a/text()',name='KC_DIV_F')
+
+
 
 
 
