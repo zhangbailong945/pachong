@@ -43,6 +43,13 @@ response.xpath('//div[@id="xxx"]').extract_first(default='not found')
 
 #7.1 按照属性查找
 response.xpath('//div[@id="s_fm"]//a[@href="/"]').extract_first()
+response.css('div[@id="s_fm"]').extract()
+
+#8.1 按属性模糊查找
+response.xpath('//a[contains(@href,"www")]/@href').extract()
+response.css('a[href*="www"]::attr(href)').extract()
+
+
 
 
 
