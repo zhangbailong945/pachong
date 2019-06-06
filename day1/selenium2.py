@@ -13,7 +13,7 @@ chrome_options.add_argument('--hide-scrollbars')
 #不加载图片，提升速度
 chrome_options.add_argument('blink-settings=imageEnabled=false')
 #浏览器不提供可视化页面
-chrome_options.add_argument('--headless')
+#chrome_options.add_argument('--headless')
 #启动失败调用谷歌浏览器,一般在不支持可视化的linux系统上
 chrome_options.binary_location=r"C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
 
